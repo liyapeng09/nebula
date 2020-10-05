@@ -51,6 +51,9 @@ public class Context {
 		providers.put(Key.of(Context.class), () -> this);
 		List<TypeProcessor> list = new ArrayList<>();
 		for (Object module : modules) {
+			if (module instanceof Class) {
+				throw new ContextException(((Class<?>) module).getName() + " provided as class instead of an instance.");
+			}
 			if (module instanceof TypeProcessor) {
 				list.add((TypeProcessor) module);
 			}
